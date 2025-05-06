@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PEX Spinner Wheel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .spinner-container {
+      margin-top: 40px;
+      width: 300px;
+      height: 300px;
+      position: relative;
+    }
+
+    .spinner {
+      width: 100%;
+      height: 100%;
+      transition: transform 3s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .pointer {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid #ff3333;
+    }
+
+    #prompt {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #444;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>PEX Event #1: Icebreaker Spinner</h1>
+  <button onclick="spin()">🎲 Spin the Wheel</button>
+  <div class="spinner-container">
+    <div class="pointer"></div>
+    <img src="https://firebasestorage.googleapis.com/v0/b/geotalks-c6e7c.firebasestorage.app/o/PEX%2FSpine%20Wheel.png?alt=media&token=219765bd-53bd-4450-b7ad-083f5d02e916" id="spinner" class="spinner" alt="Spinner Wheel">
+  </div>
+  <div id="prompt"></div>
+  <audio id="tickSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    const prompts = [
+      "A wild Pokémon has appeared! What game character would make a great science communicator?",
+      "Level up! What SciComm/PE skill would you most like to improve?",
+      "Go to jail! Share one outreach crime or embarrassing mistake.",
+      "Reverse card! What’s the weirdest question you’ve been asked by an audience?",
+      "INACCESSIBLE_BOOT_DEVICE: Could you survive SciComm/PE without a computer? Share your low-tech solutions.",
+      "Community Chest: Your outreach budget just got cut. What are your best low-cost fixes?",
+      "Boss Battle! What’s your biggest SciComm/PE challenge—and how did you overcome it?",
+      "Game Over! What’s your favourite way to end a project or event on a high note?",
+      "VIRUS DETECTED! Has a project of yours ever gone unexpectedly viral? What happened?",
+      "Loot Box! If you could open a box and find anything to make your work easier, what would it be?",
+      "Move three blocks forward: What do you think the future of our industry will look like in 2077?",
+      "Roll D20: You rolled a natural 20! Describe your dream SciComm/PE day where everything goes perfectly."
+    ];
+
+    let rotation = 0;
+
+    function spin() {
+      const spinner = document.getElementById("spinner");
+      const promptDiv = document.getElementById("prompt");
+      const tick = document.getElementById("tickSound");
+
+      const spins = Math.floor(Math.random() * 5) + 5;
+      const angle = spins * 360;
+      rotation += angle;
+
+      spinner.style.transform = `rotate(${rotation}deg)`;
+
+      let ticks = 12;
+      let interval = setInterval(() => {
+        tick.play();
+        ticks--;
+        if (ticks === 0) clearInterval(interval);
+      }, 200);
+
+      setTimeout(() => {
+        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+        promptDiv.innerText = randomPrompt;
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
